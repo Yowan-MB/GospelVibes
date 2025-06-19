@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0" />
+  <title>My Music Player</title>
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+    rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.7/mediaelementplayer.min.css"
+    rel="stylesheet" />
+  <link href="{% static 'style.css' %}"
+    rel="stylesheet" />
+  <style>
+    /* ---- NAVBAR ---- */
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 12px 20px;
+      gap: 16px;
+      /* espace entre les boutons */
+    }
+
+    .navbar .search-bar input {
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    .navbar .login-btn {
+      padding: 6px 12px;
+      background-color: #5bbb95;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* ---- LAYOUT ---- */
+    .main-layout {
+      display: flex;
+      margin-top: 60px;
+    }
+
+    /* ---- SIDEBAR ---- */
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      background-color: #111;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    /* ---- TOP LOGO + NOM ---- */
+    .top-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 80px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .nom {
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+    }
+
+    /* ---- NAVIGATION ---- */
+    .side-nav a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .side-nav h4 {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: #bbb;
+    }
+
+    /* ---- FOOTER PROFIL UTILISATEUR ---- */
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    /* ---- CONTENU PRINCIPAL ---- */
+    .music-container {
+      flex: 1;
+      margin-left: 240px;
+      padding-left: 4%;
+      padding-right: 1%;
+    }
+
+    .track-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .track-list li {
+      padding: 10px;
+      background-color: transparent;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background-fullscreen"></div>
+  <div class="container">
+
+    <!-- ✅ Layout avec Sidebar + Contenu -->
+    <div class="main-layout">
+
+      <!-- 🧱 Sidebar gauche -->
+      <aside class="sidebar">
+        <div class="top-logo">
+          <img src="{% static 'img/logo.png' %}"
+            alt="Logo"
+            class="logo" />
+          <span class="nom">GospelVibes</span>
+        </div>
+        <nav class="side-nav">
+          <a href="{% url 'home:index' %}">Accueil</a>
+          <a href="#">Parcours</a>
+          <h4>Votre bibliothèque</h4>
+          <a href="#">Playlists</a>
+          <a href="#">Titres likés</a>
+          <a href="#">Albums</a>
+        </nav>
+        <div class="user-profile">
+          <img src="{% static 'img/user.jpg' %}"
+            alt="User"
+            class="avatar" />
+          <span>{{ request.user.username }}</span>
+        </div>
+      </aside>
+
+      <!-- 🎵 Contenu principal : liste des musiques + lecteur -->
+      <main class="music-container">
+        <!-- ✅ Barre de navigation haute -->
+        <header class="navbar">
+          <div class="search-bar">
+            <input type="text"
+              placeholder="Rechercher une musique..." />
+          </div>
+          <div class="auth">
+            <button class="login-btn">Connexion</button>
+          </div>
+        </header>
+
+        <!-- 🎧 Ton lecteur existant inchangé -->
+        <div class="music-player">
+          {% for item in page_obj %}
+          <div class="cover">
+            <img alt=""
+              src="{{ item.image.url }}" />
+          </div>
+          <div class="titre">
+            <h3>{{ item.artist }}</h3>
+            <h1>{{ item.title }}</h1>
+          </div>
+          <center>
+            <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}">
+              <i class="fa fa-step-backward fa-2x"></i>
+            </a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }} {% endif %}">
+              <i class="fa fa-step-forward fa-2x"></i>
+            </a>
+          </center>
+          <div class="lecteur">
+            <audio class="fc-media"
+              style="width: 100%;">
+              <source src="{% if item.audio_file %}{{ item.audio_file.url }}{% else %}{{ item.audio_link }}{% endif %}"
+                type="audio/mp3" />
+            </audio>
+          </div>
+          {% endfor %}
+        </div>
+        <h2>Toutes les musiques</h2>
+        <ul class="track-list">
+          {% for song in all_songs %}
+          <li>{{ song.title }} - {{ song.artist }}</li>
+          {% endfor %}
+        </ul>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.7/mediaelement-and-player.min.js"></script>
+  <script src="{% static 'script.js' %}"></script>
+</body>
+
+
+</html>
