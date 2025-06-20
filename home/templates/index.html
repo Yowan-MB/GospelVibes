@@ -13,6 +13,11 @@
     rel="stylesheet" />
   <link href="{% static 'style.css' %}"
     rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+    rel="stylesheet">
+
+
+
   <style>
     /* ---- NAVBAR ---- */
     .navbar {
@@ -20,7 +25,7 @@
       justify-content: flex-end;
       align-items: center;
       padding: 12px 20px;
-      gap: 16px;
+      gap: 1px;
       /* espace entre les boutons */
     }
 
@@ -32,25 +37,27 @@
 
     .navbar .login-btn {
       padding: 6px 12px;
-      background-color: #5bbb95;
+      background: rgba(17, 17, 17, 0.4);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
     }
 
+
     /* ---- LAYOUT ---- */
     .main-layout {
       display: flex;
-      margin-top: 60px;
     }
 
-    /* ---- SIDEBAR ---- */
     .sidebar {
       width: 220px;
-      height: 100vh;
-      background-color: #111;
-      color: white;
+      height: 100%;
+      background: rgba(17, 17, 17, 0.4);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -58,9 +65,25 @@
       position: fixed;
       top: 0;
       left: 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.05),
+        0 0 20px rgba(0, 0, 0, 0.2),
+        inset 0 0 8px rgba(255, 255, 255, 0.1)
     }
 
-    /* ---- TOP LOGO + NOM ---- */
+    .side-nav h4 {
+      border-top: 1px solid rgb(58, 58, 58);
+      border-bottom: 1px solid rgb(58, 58, 58);
+      padding: 6px 0;
+      margin: 16px 0;
+      font-size: 13px;
+      color: #8a8a8a;
+    }
+
+
     .top-logo {
       display: flex;
       align-items: center;
@@ -75,9 +98,16 @@
     }
 
     .nom {
-      font-size: 18px;
+      font-size: 28px;
       font-weight: bold;
       color: white;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    .username {
+      font-size: 16px;
+      color: white;
+      font-weight: bold;
     }
 
     /* ---- NAVIGATION ---- */
@@ -91,9 +121,13 @@
 
     .side-nav h4 {
       margin-top: 20px;
-      margin-bottom: 10px;
+      margin-bottom: 30px;
       font-size: 13px;
       color: #bbb;
+    }
+
+    .nav-head {
+      margin-bottom: 20%;
     }
 
     /* ---- FOOTER PROFIL UTILISATEUR ---- */
@@ -101,6 +135,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      padding-bottom: 20%;
     }
 
     .avatar {
@@ -130,6 +165,19 @@
       border-radius: 6px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
+
+    .track-list-container {
+      background: rgba(17, 17, 17, 0.4);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.05),
+        0 0 20px rgba(0, 0, 0, 0.2),
+        inset 0 0 8px rgba(255, 255, 255, 0.1)
+    }
   </style>
 </head>
 
@@ -149,18 +197,24 @@
           <span class="nom">GospelVibes</span>
         </div>
         <nav class="side-nav">
-          <a href="{% url 'home:index' %}">Accueil</a>
-          <a href="#">Parcours</a>
-          <h4>Votre bibliothèque</h4>
-          <a href="#">Playlists</a>
-          <a href="#">Titres likés</a>
-          <a href="#">Albums</a>
+          <div class="nav-head">
+            <a href="{% url 'home:index' %}">Accueil</a>
+            <a href="#">Parcours</a>
+          </div>
+          <div class="nav-body">
+            <h4>Votre bibliothèque</h4>
+            <a href="javascript:void(0);"
+              id="playlist-btn">Playlists</a>
+            <a href="#">Titres likés</a>
+            <a href="#">Albums</a>
+          </div>
+
         </nav>
         <div class="user-profile">
           <img src="{% static 'img/user.jpg' %}"
             alt="User"
             class="avatar" />
-          <span>{{ request.user.username }}</span>
+          <span class="username">{{ request.user.username }}</span>
         </div>
       </aside>
 
@@ -173,7 +227,11 @@
               placeholder="Rechercher une musique..." />
           </div>
           <div class="auth">
-            <button class="login-btn">Connexion</button>
+            <button class="login-btn"
+              aria-label="connexion">
+              <i class="fa fa-sign-in"></i>
+            </button>
+
           </div>
         </header>
 
@@ -206,22 +264,58 @@
           </div>
           {% endfor %}
         </div>
-        <h2>Toutes les musiques</h2>
-        <ul class="track-list">
-          {% for song in all_songs %}
-          <li>{{ song.title }} - {{ song.artist }}</li>
-          {% endfor %}
-        </ul>
+        <div class="track-list-container">
+          <h2 id="track-list-title"
+            style="display:none;">Toutes les musiques</h2>
+          <ul class="track-list"
+            id="track-list-container"
+            style="display:none;">
+            {% for song in all_songs %}
+            <li class="track-item">
+              <div class="track-info">
+                <span class="track-title">{{ song.title }}</span>
+                <span class="track-artist">{{ song.artist }}</span>
+              </div>
+              <button class="play-button"
+                data-title="{{ song.title }}"
+                data-artist="{{ song.artist }}"
+                data-url="{% if song.audio_file %}{{ song.audio_file.url }}{% else %}{{ song.audio_link }}{% endif %}"
+                data-img="{{ song.image.url }}">
+                <i class="fa fa-play"></i>
+              </button>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
 
       </main>
     </div>
-
   </div>
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.7/mediaelement-and-player.min.js"></script>
+
+  <script>
+    document.getElementById('playlist-btn').addEventListener('click', function () {
+      const trackList = document.getElementById('track-list-container');
+      const trackTitle = document.getElementById('track-list-title');
+
+      if (trackList.style.display === 'block') {
+        // Elle est visible → on la cache
+        trackList.style.display = 'none';
+        trackTitle.style.display = 'none';
+      } else {
+        // Elle est cachée → on l’affiche
+        trackList.style.display = 'block';
+        trackTitle.style.display = 'block';
+        trackTitle.scrollIntoView({ behavior: 'smooth' });
+      }
+
+    });
+  </script>
   <script src="{% static 'script.js' %}"></script>
+
 </body>
 
 
