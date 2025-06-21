@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-Bien sûr Yowan, voici une version adaptée de ce `README.md` pour ton projet **GospelVibes**, en tenant compte de sa structure actuelle et de ses objectifs :
-
----
-
-```markdown
 # 🎶 GospelVibes – Django Music Player
 
 **GospelVibes** est un lecteur de musique interactif développé avec Django, HTML/CSS, JavaScript et Font Awesome. Il permet aux utilisateurs de parcourir une playlist gospel, lire les morceaux avec des contrôles modernes (lecture, pause, suivant, précédent, volume), et d’interagir avec une interface responsive et animée compatible mobile.
@@ -64,7 +58,7 @@ Visite : [http://localhost:8000](http://localhost:8000)
 ## 📱 Capture d’écran (à ajouter)
 
 <p align="center">
-  <img src="static/img/capture.png" alt="Aperçu de GospelVibes" width="500">
+  <img src="capture.png" alt="Aperçu de GospelVibes" width="500">
 </p>
 
 ---
