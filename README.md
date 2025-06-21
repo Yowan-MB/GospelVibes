@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Bien sûr Yowan, voici une version adaptée de ce `README.md` pour ton projet **GospelVibes**, en tenant compte de sa structure actuelle et de ses objectifs :
 
 ---
@@ -96,3 +97,6 @@ Projet conçu et maintenu par **Yowan Mberi**, passionné par le développement 
 Ce projet est sous licence MIT — libre à explorer, adapter, partager.
 
 ```
+=======
+
+>>>>>>> febabfd4a18e122edeeb25cc027397c6ddbdbdbd
