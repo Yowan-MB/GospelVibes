@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('🎶 script.js chargé sans MediaElement');
+    console.log('🎶 script.js chargé');
 
     const player = new Audio();
     let currentButton = null;
 
+    // Éléments principaux
     const titleElem = document.querySelector('.titre h1');
     const artistElem = document.querySelector('.titre h3');
     const coverImg = document.querySelector('.cover img');
@@ -17,43 +18,82 @@ document.addEventListener('DOMContentLoaded', function () {
     const volumeControl = document.getElementById('volume-control');
     const volumeIcon = document.getElementById('volume-icon');
 
-    // Initialiser volume
+    const nextBtn = document.getElementById('next-track');
+    const prevBtn = document.getElementById('prev-track');
+
+    const playlist = Array.from(document.querySelectorAll('.play-button'));
+
+    // Volume initial
     player.volume = volumeControl?.value || 1;
 
-    // 🎚️ Volume dynamique + icône
     volumeControl?.addEventListener('input', () => {
         const vol = volumeControl.value;
         player.volume = vol;
-
-        if (vol == 0) {
-            volumeIcon.className = 'fa fa-volume-mute';
-        } else if (vol < 0.5) {
-            volumeIcon.className = 'fa fa-volume-down';
-        } else {
-            volumeIcon.className = 'fa fa-volume-up';
-        }
+        if (vol == 0) volumeIcon.className = 'fa fa-volume-mute';
+        else if (vol < 0.5) volumeIcon.className = 'fa fa-volume-down';
+        else volumeIcon.className = 'fa fa-volume-up';
     });
 
-    // ⏯️ Mise à jour des infos visuelles
-    const updateDisplay = (title, artist, img) => {
+    // Met à jour le visuel
+    function updateDisplay(title, artist, img) {
         if (titleElem) titleElem.textContent = title;
         if (artistElem) artistElem.textContent = artist;
         if (coverImg && img) coverImg.src = img;
-    };
+    }
 
-    // 🎵 Lecture depuis la playlist
-    document.querySelectorAll('.play-button').forEach(button => {
+    // Lecture à partir d’un bouton
+    function loadAndPlay(button) {
+        if (!button) return;
+        const icon = button.querySelector('i');
+        const src = button.dataset.url;
+        const title = button.dataset.title;
+        const artist = button.dataset.artist;
+        const img = button.dataset.img;
+        if (!src) return;
+
+        document.querySelectorAll('.play-button').forEach(btn => {
+            const i = btn.querySelector('i');
+            btn.classList.remove('active');
+            i?.classList.remove('fa-pause', 'rotate');
+            i?.classList.add('fa-play');
+        });
+
+        player.src = src;
+        player.load();
+        player.play().then(() => {
+            icon.classList.remove('fa-play');
+            icon.classList.add('fa-pause', 'rotate');
+            playBtn?.querySelector('i')?.classList.replace('fa-play', 'fa-pause');
+            button.classList.add('active');
+            currentButton = button;
+            updateDisplay(title, artist, img);
+        });
+
+        container.style.opacity = '0.2';
+        setTimeout(() => container.style.opacity = '1', 250);
+    }
+
+    // Bouton suivant
+    nextBtn?.addEventListener('click', () => {
+        if (!currentButton) return loadAndPlay(playlist[0]);
+        const i = playlist.indexOf(currentButton);
+        const next = playlist[i + 1] || playlist[0];
+        loadAndPlay(next);
+    });
+
+    // Bouton précédent
+    prevBtn?.addEventListener('click', () => {
+        if (!currentButton) return loadAndPlay(playlist[0]);
+        const i = playlist.indexOf(currentButton);
+        const prev = playlist[i - 1] || playlist[playlist.length - 1];
+        loadAndPlay(prev);
+    });
+
+    // Lecture via boutons playlist
+    playlist.forEach(button => {
         button.addEventListener('click', () => {
-            const icon = button.querySelector('i');
-            const src = button.dataset.url;
-            const title = button.dataset.title;
-            const artist = button.dataset.artist;
-            const img = button.dataset.img;
-
-            if (!src) return;
-
             const isSame = button === currentButton;
-
+            const icon = button.querySelector('i');
             if (isSame && !player.paused) {
                 player.pause();
                 icon.classList.remove('fa-pause', 'rotate');
@@ -61,42 +101,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 playBtn?.querySelector('i')?.classList.replace('fa-pause', 'fa-play');
                 return;
             }
-
-            // Réinitialiser tous les boutons
-            document.querySelectorAll('.play-button').forEach(btn => {
-                const i = btn.querySelector('i');
-                btn.classList.remove('active');
-                i?.classList.remove('fa-pause', 'rotate');
-                i?.classList.add('fa-play');
-            });
-
-            player.src = src;
-            player.load();
-            player.play().then(() => {
-                icon.classList.remove('fa-play');
-                icon.classList.add('fa-pause', 'rotate');
-                playBtn?.querySelector('i')?.classList.replace('fa-play', 'fa-pause');
-                button.classList.add('active');
-                currentButton = button;
-                updateDisplay(title, artist, img);
-            });
-
-            container.style.opacity = '0.2';
-            setTimeout(() => container.style.opacity = '1', 250);
+            loadAndPlay(button);
         });
     });
 
-    // ▶️ Lecture/pause depuis le lecteur principal
+    // Contrôle principal
     playBtn?.addEventListener('click', () => {
-        if (!player.src) {
-            const firstBtn = document.querySelector('.play-button');
-            if (firstBtn) {
-                firstBtn.click();
-            } else {
-                console.warn("Aucune chanson disponible pour la lecture.");
-            }
-            return;
-        }
+        if (!player.src) return loadAndPlay(playlist[0]);
 
         if (player.paused) {
             player.play();
@@ -113,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // ⏱️ Mise à jour de la durée et de la barre
+    // Barre de progression & temps
     player.addEventListener('loadedmetadata', () => {
         progressBar.max = Math.floor(player.duration);
         totalDuration.textContent = formatTime(player.duration);
@@ -128,24 +139,22 @@ document.addEventListener('DOMContentLoaded', function () {
         player.currentTime = progressBar.value;
     });
 
-    // 🛑 Fin de la musique
+    // Fin automatique
     player.addEventListener('ended', () => {
-        const icon = currentButton?.querySelector('i');
-        icon?.classList.remove('fa-pause', 'rotate');
-        icon?.classList.add('fa-play');
+        currentButton?.querySelector('i')?.classList.remove('fa-pause', 'rotate');
+        currentButton?.querySelector('i')?.classList.add('fa-play');
         playBtn?.querySelector('i')?.classList.replace('fa-pause', 'fa-play');
         currentButton?.classList.remove('active');
         currentButton = null;
     });
 
-    // ⏳ Utilitaire de temps
     function formatTime(secs) {
         const min = Math.floor(secs / 60);
         const sec = Math.floor(secs % 60).toString().padStart(2, '0');
         return `${min}:${sec}`;
     }
 
-    // 📂 Affichage playlist
+    // Playlist toggle
     const toggleBtn = document.getElementById('playlist-btn');
     const trackList = document.getElementById('track-list');
     const trackTitle = document.getElementById('track-list-title');
@@ -157,9 +166,8 @@ document.addEventListener('DOMContentLoaded', function () {
         trackTitle.style.display = isVisible ? 'none' : 'block';
         if (!isVisible) trackTitle.scrollIntoView({ behavior: 'smooth' });
     });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
+    // 🍔 Menu mobile sidebar
     const menuToggle = document.getElementById('menu-toggle');
     const sidebar = document.querySelector('.sidebar');
 
@@ -168,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.toggle('sidebar-open');
     });
 
-    // Ferme la sidebar si on clique hors d’elle
     document.body.addEventListener('click', (e) => {
         if (
             document.body.classList.contains('sidebar-open') &&

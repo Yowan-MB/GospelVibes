@@ -310,7 +310,7 @@ h3 {
     justify-content: flex-end;
     align-items: center;
     padding: 12px 20px;
-    gap: 1px; /* espace entre les boutons */
+    gap: 1px;
 }
 .navbar .search-bar input {
     padding: 6px 10px;
@@ -507,7 +507,7 @@ h3 {
 .temps {
     color: white;
 }
-/* ▶️ Bouton lecture principal repositionné au centre */
+
 #main-play-btn {
     background: none;
     border: none;
@@ -522,7 +522,7 @@ h3 {
     transform: scale(1.2);
 }
 .music-player i {
-    color: #fff; /* ou la couleur exacte que tu veux, ex. #ffd369 */
+    color: #fff;
     transition: color 0.3s ease;
 }
 .music-player i:hover {
@@ -582,7 +582,7 @@ h3 {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-        padding: 15px; /* garde la valeur la plus généreuse */
+        padding: 15px;
         box-shadow: none;
     }
 
@@ -683,7 +683,7 @@ h3 {
         font-size: 14px;
     }
 }
-/* 🍔 Style du bouton burger */
+/* Style du bouton burger */
 .burger-menu {
     display: none;
     background: none;

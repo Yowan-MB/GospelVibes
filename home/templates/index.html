@@ -3,10 +3,15 @@
 <html lang="en">
 
 <head>
+  <!-- Métadonnées de base pour l’encodage et le responsive design -->
   <meta charset="utf-8" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0" />
+
+  <!-- Titre de l’onglet -->
   <title>My Music Player</title>
+
+  <!-- Liens vers les feuilles de style externes (icônes, lecteur audio, polices) -->
   <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
     rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.7/mediaelementplayer.min.css"
@@ -21,20 +26,23 @@
 </head>
 
 <body>
+  <!-- Arrière-plan global -->
   <div class="background-fullscreen"></div>
-  <div class="container">
 
-    <!-- ✅ Layout avec Sidebar + Contenu -->
+  <div class="container">
     <div class="main-layout">
 
-      <!-- 🧱 Sidebar gauche -->
+      <!-- Barre latérale gauche (menu de navigation) -->
       <aside class="sidebar">
+        <!-- Logo et nom de l’application -->
         <div class="top-logo">
           <img src="{% static 'img/logo.png' %}"
             alt="Logo"
             class="logo" />
           <span class="nom">GospelVibes</span>
         </div>
+
+        <!-- Liens de navigation (menu utilisateur) -->
         <nav class="side-nav">
           <div class="nav-head">
             <a href="{% url 'home:index' %}">Accueil</a>
@@ -47,8 +55,9 @@
             <a href="#">Titres likés</a>
             <a href="#">Albums</a>
           </div>
-
         </nav>
+
+        <!-- Profil utilisateur connecté -->
         <div class="user-profile">
           <img src="{% static 'img/user.jpg' %}"
             alt="User"
@@ -57,11 +66,12 @@
         </div>
       </aside>
 
-      <!-- 🎵 Contenu principal : liste des musiques + lecteur -->
+      <!-- Contenu principal de l’application (lecteur + pistes) -->
       <main class="music-container">
-        <!-- ✅ Barre de navigation haute -->
+
+        <!-- Barre supérieure avec recherche et connexion -->
         <header class="navbar">
-          <!-- 🔘 Bouton de menu mobile -->
+          <!--  Bouton menu mobile -->
           <button id="menu-toggle"
             class="burger-menu"
             aria-label="menu mobile">
@@ -76,23 +86,27 @@
               aria-label="connexion">
               <i class="fa fa-sign-in"></i>
             </button>
-
           </div>
         </header>
 
-        <!-- lecteur principal -->
+        <!-- Lecteur principal affichant la première musique -->
         <div class="music-player">
           {% if page_obj %}
+          <!-- Image de couverture -->
           <div class="cover">
             <img alt=""
               src="{{ page_obj.object_list.0.image.url }}" />
           </div>
+
+          <!-- Infos musicales (titre et artiste) -->
           <div class="titre">
             <h3>{{ page_obj.object_list.0.artist }}</h3>
             <h1>{{ page_obj.object_list.0.title }}</h1>
           </div>
+
+          <!-- Contrôles de navigation entre pistes -->
           <center>
-            <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}"
+            <a id="prev-track"
               aria-label="musiques">
               <i class="fa fa-step-backward fa-2x"></i>
             </a>
@@ -103,11 +117,13 @@
               <i class="fa fa-play"></i>
             </button>
             &nbsp;&nbsp;&nbsp;
-            <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}"
+            <a id="next-track"
               aria-label="musiques">
               <i class="fa fa-step-forward fa-2x"></i>
             </a>
           </center>
+
+          <!-- Barre de progression personnalisée -->
           <div class="custom-controls">
             <span id="current-time"
               class="temps">0:00</span>
@@ -120,6 +136,8 @@
             <span id="total-duration"
               class="temps">0:00</span>
           </div>
+
+          <!-- Contrôle du volume -->
           <div class="volume-wrapper">
             <i class="fa fa-volume-up"
               id="volume-icon"></i>
@@ -133,6 +151,8 @@
           </div>
           {% endif %}
         </div>
+
+        <!-- Liste complète des musiques (toggle) -->
         <div class="track-list-container">
           <h2 id="track-list-title"
             style="display:none;">Toutes les musiques</h2>
@@ -145,6 +165,8 @@
                 <span class="track-title">{{ song.title }}</span>
                 <span class="track-artist">{{ song.artist }}</span>
               </div>
+
+              <!--  Bouton individuel pour chaque piste -->
               <button class="play-button"
                 data-title="{{ song.title }}"
                 data-artist="{{ song.artist }}"
@@ -161,12 +183,11 @@
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Scripts nécessaires au fonctionnement de l’interface -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.7/mediaelement-and-player.min.js"></script>
   <script src="{% static 'script.js' %}"></script>
 
 </body>
-
 
 </html>
