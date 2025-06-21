@@ -1,88 +1,98 @@
-
-
-# Django based music layer
-
-#### Django Music Player is a simple web application built with Django that allows users to upload, manage, and play music files.
-> 
-![GitHub stars](https://img.shields.io/github/stars/rajaprerak/MusicPlayer) 
-[![Maintenance](https://img.shields.io/badge/maintained-yes-green.svg)](https://github.com/rajaprerak/MusicPlayer/commits/master)
-[![Website shields.io](https://img.shields.io/badge/website-up-yellow)](https://galvanic-music.herokuapp.com/)
-[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
-
-
-
-## Installation 📦
-### To install Django Music Player, follow these steps:
-## 1. Clone this repository:
->'https://github.com/BurhanMohammad/Django-MusicPlayer.git'
-## 2. Navigate to the project directory:
-
-```bash
-  cd Django-MusicPlayer
-```
-## 3 . Create a virtual environment:
-```bash
-  python3 -m venv env
-```
-## 4. Activate the virtual environment:
-```bash
-  source env/bin/activate
-```
-## 5. Install the project dependencies:
-```bash
-  pip install -r requirements.txt
-```
-## 6 . Run the server
-```bash
-  python manage.py runserver
-```
-## 7 . Go to localhost:8000
----
-
-## Features 📋
-
-⚡️ SignUp and SignIn option.\
-⚡️ Google SignUp and SignIn option.\
-⚡️ Play song, view detailed information of song.\
-⚡️ Search songs.\
-⚡️ Filter songs based on language and singer.\
-⚡️ Create new playlist.\
-⚡️ Add/Remove songs to/from playlist.\
-⚡️ Add/Remove songs to/from favourites.\
-⚡️ Scroll through recently played/viewed songs.\
-⚡️ Explore songs through your personalized playlist and favourites.\
-⚡️ User authentication: Users can sign up, log in, and log out.
-
+Bien sûr Yowan, voici une version adaptée de ce `README.md` pour ton projet **GospelVibes**, en tenant compte de sa structure actuelle et de ses objectifs :
 
 ---
 
-## Contributing 💡
+```markdown
+# 🎶 GospelVibes – Django Music Player
 
-#### If you'd like to contribute to Django Music Player, feel free to fork this repository and submit a pull request.
+**GospelVibes** est un lecteur de musique interactif développé avec Django, HTML/CSS, JavaScript et Font Awesome. Il permet aux utilisateurs de parcourir une playlist gospel, lire les morceaux avec des contrôles modernes (lecture, pause, suivant, précédent, volume), et d’interagir avec une interface responsive et animée compatible mobile.
 
+> ✨ Développé par Yowan pour renforcer l’infrastructure numérique du Congo à travers des projets accessibles et pédagogiques.
 
-#### Step 1
+---
 
-- **Option 1**
-    - 🍴 Fork this repo!
+## 🔧 Installation
 
-- **Option 2**
-    - 👯 Clone this repo to your local machine.
+### Clone le projet :
 
+```bash
+git clone https://github.com/Yowan-Mb/gospelvibes.git
+cd gospelvibes
+```
 
-#### Step 2
+### Crée et active un environnement virtuel :
 
-- **Build your code** 🔨🔨🔨
+```bash
+python3 -m venv env
+source env/bin/activate  # Linux/macOS
+# ou
+env\Scripts\activate     # Windows
+```
 
-#### Step 3
+### Installe les dépendances :
 
-- 🔃 Create a new pull request.
-## Creadits :
+```bash
+pip install -r requirements.txt
+```
 
-#### Django Music Player was created by Mohammad Burhan
+### Applique les migrations et démarre le serveur :
 
+```bash
+python manage.py migrate
+python manage.py runserver
+```
 
-## License
-[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+Visite : [http://localhost:8000](http://localhost:8000)
 
-- **[MIT license](http://opensource.org/licenses/mit-license.php)**
+---
+
+## ✨ Fonctionnalités
+
+- 🎵 Interface moderne avec lecteur audio intégré
+- ⏯️ Contrôles lecture, pause, piste suivante/précédente
+- 📱 Design responsive mobile avec menu glissant
+- 🕒 Barre de progression dynamique et durée réelle
+- 🎚️ Contrôle du volume avec icône contextuelle
+- 🎼 Affichage de la pochette, titre et artiste en cours
+- 📂 Playlist dynamique avec affichage masqué
+- 🌙 Animations douces et transitions esthétiques
+- 🔐 Authentification Django intégrée (à venir)
+
+---
+
+## 📱 Capture d’écran (à ajouter)
+
+<p align="center">
+  <img src="static/img/capture.png" alt="Aperçu de GospelVibes" width="500">
+</p>
+
+---
+
+## 🛠 Contribution
+
+Les contributions sont les bienvenues pour enrichir GospelVibes !
+
+```bash
+# Étapes :
+- Fork 🍴 le repo
+- Clone 👯‍♂️ le fork
+- Codez 🔨
+- Pull request 🔃
+```
+
+---
+
+## 👤 Auteur
+
+Projet conçu et maintenu par **Yowan Mberi**, passionné par le développement web et la cybersécurité.  
+📚 En route vers l'excellence académique et l'impact numérique au Congo.
+
+---
+
+## 📝 Licence
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/mit-license.php)
+
+Ce projet est sous licence MIT — libre à explorer, adapter, partager.
+
+```
