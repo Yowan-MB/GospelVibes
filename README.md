@@ -55,7 +55,7 @@ Visite : [http://localhost:8000](http://localhost:8000)
 
 ---
 
-## 📱 Capture d’écran (à ajouter)
+## 📱 Capture d’écran
 
 <p align="center">
   <img src="capture.png" alt="Aperçu de GospelVibes" width="500">
