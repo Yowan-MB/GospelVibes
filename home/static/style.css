@@ -44,7 +44,6 @@ h3 {
     overflow: hidden;
     background: transparent;
 }
-
 .music-player {
     display: block;
     position: relative;
@@ -55,24 +54,6 @@ h3 {
     border-radius: 0 0 10px 10px;
     background: transparent linear-gradient(to bottom, rgba(10, 11, 31, 0.9) 50%, rgb(10, 11, 31) 70%) repeat scroll 0 0;
     box-shadow: 1px 10px 20px 5px #222;
-}
-.cover {
-    float: left;
-    width: 100%;
-    height: 60%;
-}
-.cover img {
-    display: block;
-    position: absolute;
-    top: 8%;
-    left: 14%;
-    width: 70%;
-    margin: auto;
-    text-align: center;
-}
-.titre {
-    float: left;
-    width: 100%;
 }
 .lecteur {
     width: 100%;
@@ -253,7 +234,6 @@ h3 {
     padding: 0;
     margin: 0;
 }
-
 .track-item {
     display: flex;
     justify-content: space-between;
@@ -267,27 +247,22 @@ h3 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background 0.2s ease-in-out;
 }
-
 .track-item:hover {
     background-color: rgba(255, 255, 255, 0.08);
 }
-
 .track-info {
     display: flex;
     flex-direction: column;
     color: white;
 }
-
 .track-title {
     font-weight: bold;
     font-size: 16px;
 }
-
 .track-artist {
     font-size: 13px;
     color: #ccc;
 }
-
 .play-button {
     background-color: #5bbb95;
     color: white;
@@ -302,24 +277,20 @@ h3 {
     font-size: 16px;
     transition: background 0.2s ease-in-out;
 }
-
 .play-button:hover {
     background-color: #4da585;
 }
-
 .track-list-container h2 {
     color: white;
     text-align: center;
     font-family: "Caveat", cursive;
     margin-top: 25%;
 }
-
 .music-player {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeSlideIn 0.6s ease forwards;
 }
-
 /* Animation clé */
 @keyframes fadeSlideIn {
     to {
@@ -327,16 +298,436 @@ h3 {
         transform: translateY(0);
     }
 }
-
 .music-player {
     box-shadow: 0 0 16px rgba(91, 187, 149, 0.25);
     transition: box-shadow 0.4s ease;
 }
-
 .music-player:hover {
     box-shadow: 0 0 32px rgba(91, 187, 149, 0.35);
+} /* ---- NAVBAR ---- */
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 1px; /* espace entre les boutons */
 }
-.play-button {
-    border: 2px solid red !important;
-    z-index: 99;
+.navbar .search-bar input {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: none;
+}
+.navbar .login-btn {
+    padding: 6px 12px;
+    background: rgba(17, 17, 17, 0.4);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+/* ---- LAYOUT ---- */
+.main-layout {
+    display: flex;
+}
+.sidebar {
+    width: 220px;
+    height: 100%;
+    background: rgba(17, 17, 17, 0.4);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.05),
+        0 0 20px rgba(0, 0, 0, 0.2),
+        inset 0 0 8px rgba(255, 255, 255, 0.1);
+}
+.side-nav h4 {
+    border-top: 1px solid rgb(58, 58, 58);
+    border-bottom: 1px solid rgb(58, 58, 58);
+    padding: 6px 0;
+    margin: 16px 0;
+    font-size: 13px;
+    color: #8a8a8a;
+}
+.top-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.logo {
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+}
+.nom {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    font-family: "Great Vibes", cursive;
+}
+.username {
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+/* ---- NAVIGATION ---- */
+.side-nav a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin: 8px 0;
+    font-size: 14px;
+}
+.side-nav h4 {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 13px;
+    color: #bbb;
+}
+.nav-head {
+    margin-bottom: 20%;
+}
+/* ---- FOOTER PROFIL UTILISATEUR ---- */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 20%;
+}
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+/* ---- CONTENU PRINCIPAL ---- */
+.music-container {
+    flex: 1;
+    margin-left: 240px;
+    padding-left: 4%;
+    padding-right: 1%;
+}
+.track-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.track-list li {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    background-color: transparent;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.track-list-container {
+    background: rgba(17, 17, 17, 0.4);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.05),
+        0 0 20px rgba(0, 0, 0, 0.2),
+        inset 0 0 8px rgba(255, 255, 255, 0.1);
+}
+.cover {
+    float: left;
+    width: 100%;
+    height: 60% !important;
+}
+.cover img {
+    display: block;
+    position: absolute;
+    top: 8%;
+    left: 16%;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
+.titre {
+    float: left;
+    width: 100%;
+    margin-bottom: 3%;
+}
+.track-item.playing {
+    background-color: rgba(70, 70, 70, 0.1);
+    transition: background-color 0.5s ease;
+    transform: scale(1.02);
+}
+.play-button i.rotate {
+    animation: spin 1.2s linear infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* Zone de progression musicale */
+.custom-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+    background: transparent;
+    padding: 8px 12px;
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+.custom-controls input[type="range"] {
+    flex: 1;
+    height: 4px;
+    background: #888;
+    border-radius: 3px;
+    accent-color: #560c6c;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.custom-controls input[type="range"]:hover {
+    background: #560c6c;
+}
+.temps {
+    color: white;
+}
+/* ▶️ Bouton lecture principal repositionné au centre */
+#main-play-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin: 0 10px;
+}
+#main-play-btn:hover {
+    color: #560c6c;
+    transform: scale(1.2);
+}
+.music-player i {
+    color: #fff; /* ou la couleur exacte que tu veux, ex. #ffd369 */
+    transition: color 0.3s ease;
+}
+.music-player i:hover {
+    color: #560c6c;
+}
+/* 🎵 Icône animée pendant la lecture */
+.play-button i.rotate,
+#main-play-btn i.rotate {
+    animation: spin 1.2s linear infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.volume-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 8px;
+    margin-right: 3%;
+}
+#volume-icon {
+    color: #fff;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+#volume-icon:hover {
+    color: #aeaba4;
+}
+#volume-control {
+    width: 100px;
+    height: 4px;
+    background: #888;
+    border-radius: 2px;
+    accent-color: #606060;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+#volume-control:hover {
+    background: #560c6c;
+}
+
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 15px; /* garde la valeur la plus généreuse */
+        box-shadow: none;
+    }
+
+    .user-profile {
+        justify-content: center;
+        padding-bottom: 0;
+        margin-top: 10px;
+    }
+
+    .side-nav {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding-left: 2%;
+    }
+
+    .music-container {
+        margin-left: 0;
+        padding: 20px 5%;
+    }
+
+    .music-player {
+        width: 85%;
+        height: auto;
+        margin-top: 30px;
+        padding: 20px 5%;
+        border-radius: 10px;
+    }
+
+    .cover img {
+        position: static;
+        width: 80%;
+        max-width: 300px;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .titre h1,
+    .titre h3 {
+        padding: 0;
+        text-align: center;
+    }
+
+    .custom-controls {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .volume-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        width: 30%;
+        margin: 10px 0;
+    }
+
+    #volume-control {
+        width: 100%;
+    }
+
+    #volume-control {
+        width: 100%;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: end;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .navbar .search-bar input {
+        width: 100%;
+    }
+
+    .track-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .track-title {
+        font-size: 14px;
+    }
+
+    .track-artist {
+        font-size: 12px;
+    }
+
+    .play-button {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+    }
+}
+/* 🍔 Style du bouton burger */
+.burger-menu {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .burger-menu {
+        display: block;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1001;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        width: 70%;
+        height: 100%;
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .main-layout {
+        padding-left: 0 !important;
+    }
+
+    body.sidebar-open::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 70%;
+        width: 30%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 999;
+    }
 }

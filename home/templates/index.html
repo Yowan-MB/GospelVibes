@@ -15,170 +15,9 @@
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
     rel="stylesheet">
-
-
-
-  <style>
-    /* ---- NAVBAR ---- */
-    .navbar {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 12px 20px;
-      gap: 1px;
-      /* espace entre les boutons */
-    }
-
-    .navbar .search-bar input {
-      padding: 6px 10px;
-      border-radius: 4px;
-      border: none;
-    }
-
-    .navbar .login-btn {
-      padding: 6px 12px;
-      background: rgba(17, 17, 17, 0.4);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-
-    /* ---- LAYOUT ---- */
-    .main-layout {
-      display: flex;
-    }
-
-    .sidebar {
-      width: 220px;
-      height: 100%;
-      background: rgba(17, 17, 17, 0.4);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-      border-right: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow:
-        0 0 10px rgba(255, 255, 255, 0.05),
-        0 0 20px rgba(0, 0, 0, 0.2),
-        inset 0 0 8px rgba(255, 255, 255, 0.1)
-    }
-
-    .side-nav h4 {
-      border-top: 1px solid rgb(58, 58, 58);
-      border-bottom: 1px solid rgb(58, 58, 58);
-      padding: 6px 0;
-      margin: 16px 0;
-      font-size: 13px;
-      color: #8a8a8a;
-    }
-
-
-    .top-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .logo {
-      width: 80px;
-      height: auto;
-      object-fit: contain;
-    }
-
-    .nom {
-      font-size: 28px;
-      font-weight: bold;
-      color: white;
-      font-family: 'Great Vibes', cursive;
-    }
-
-    .username {
-      font-size: 16px;
-      color: white;
-      font-weight: bold;
-    }
-
-    /* ---- NAVIGATION ---- */
-    .side-nav a {
-      color: white;
-      text-decoration: none;
-      display: block;
-      margin: 8px 0;
-      font-size: 14px;
-    }
-
-    .side-nav h4 {
-      margin-top: 20px;
-      margin-bottom: 30px;
-      font-size: 13px;
-      color: #bbb;
-    }
-
-    .nav-head {
-      margin-bottom: 20%;
-    }
-
-    /* ---- FOOTER PROFIL UTILISATEUR ---- */
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding-bottom: 20%;
-    }
-
-    .avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-    }
-
-    /* ---- CONTENU PRINCIPAL ---- */
-    .music-container {
-      flex: 1;
-      margin-left: 240px;
-      padding-left: 4%;
-      padding-right: 1%;
-    }
-
-    .track-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .track-list li {
-      padding: 10px;
-      background-color: transparent;
-      margin-bottom: 8px;
-      border-radius: 6px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .track-list-container {
-      background: rgba(17, 17, 17, 0.4);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-      border-right: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow:
-        0 0 10px rgba(255, 255, 255, 0.05),
-        0 0 20px rgba(0, 0, 0, 0.2),
-        inset 0 0 8px rgba(255, 255, 255, 0.1)
-    }
-  </style>
+  <link rel="icon"
+    href="{% static 'img/favicon.png' %}"
+    type="image/x-icon">
 </head>
 
 <body>
@@ -222,6 +61,12 @@
       <main class="music-container">
         <!-- ✅ Barre de navigation haute -->
         <header class="navbar">
+          <!-- 🔘 Bouton de menu mobile -->
+          <button id="menu-toggle"
+            class="burger-menu"
+            aria-label="menu mobile">
+            <i class="fa fa-bars"></i>
+          </button>
           <div class="search-bar">
             <input type="text"
               placeholder="Rechercher une musique..." />
@@ -235,40 +80,64 @@
           </div>
         </header>
 
-        <!-- 🎧 Ton lecteur existant inchangé -->
+        <!-- lecteur principal -->
         <div class="music-player">
-          {% for item in page_obj %}
+          {% if page_obj %}
           <div class="cover">
             <img alt=""
-              src="{{ item.image.url }}" />
+              src="{{ page_obj.object_list.0.image.url }}" />
           </div>
           <div class="titre">
-            <h3>{{ item.artist }}</h3>
-            <h1>{{ item.title }}</h1>
+            <h3>{{ page_obj.object_list.0.artist }}</h3>
+            <h1>{{ page_obj.object_list.0.title }}</h1>
           </div>
           <center>
-            <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}">
+            <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}"
+              aria-label="musiques">
               <i class="fa fa-step-backward fa-2x"></i>
             </a>
             &nbsp;&nbsp;&nbsp;
-            <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }} {% endif %}">
+            <button id="main-play-btn"
+              class="main-play"
+              aria-label="play">
+              <i class="fa fa-play"></i>
+            </button>
+            &nbsp;&nbsp;&nbsp;
+            <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}"
+              aria-label="musiques">
               <i class="fa fa-step-forward fa-2x"></i>
             </a>
           </center>
-          <div class="lecteur">
-            <audio class="fc-media"
-              style="width: 100%;">
-              <source src="{% if item.audio_file %}{{ item.audio_file.url }}{% else %}{{ item.audio_link }}{% endif %}"
-                type="audio/mp3" />
-            </audio>
+          <div class="custom-controls">
+            <span id="current-time"
+              class="temps">0:00</span>
+            <input type="range"
+              id="progress-bar"
+              value="0"
+              min="0"
+              step="1"
+              aria-label="progression de la musique">
+            <span id="total-duration"
+              class="temps">0:00</span>
           </div>
-          {% endfor %}
+          <div class="volume-wrapper">
+            <i class="fa fa-volume-up"
+              id="volume-icon"></i>
+            <input type="range"
+              id="volume-control"
+              min="0"
+              max="1"
+              step="0.01"
+              value="1"
+              aria-label="volume">
+          </div>
+          {% endif %}
         </div>
         <div class="track-list-container">
           <h2 id="track-list-title"
             style="display:none;">Toutes les musiques</h2>
           <ul class="track-list"
-            id="track-list-container"
+            id="track-list"
             style="display:none;">
             {% for song in all_songs %}
             <li class="track-item">
@@ -295,25 +164,6 @@
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.7/mediaelement-and-player.min.js"></script>
-
-  <script>
-    document.getElementById('playlist-btn').addEventListener('click', function () {
-      const trackList = document.getElementById('track-list-container');
-      const trackTitle = document.getElementById('track-list-title');
-
-      if (trackList.style.display === 'block') {
-        // Elle est visible → on la cache
-        trackList.style.display = 'none';
-        trackTitle.style.display = 'none';
-      } else {
-        // Elle est cachée → on l’affiche
-        trackList.style.display = 'block';
-        trackTitle.style.display = 'block';
-        trackTitle.scrollIntoView({ behavior: 'smooth' });
-      }
-
-    });
-  </script>
   <script src="{% static 'script.js' %}"></script>
 
 </body>
