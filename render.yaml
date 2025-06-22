@@ -1,16 +1,14 @@
 services:
   - type: web
     name: gospelvibes
-    runtime: python
     buildCommand: |
       pip install -r requirements.txt
       python manage.py collectstatic --noinput
     startCommand: gunicorn MusicPlayer.wsgi:application
+    pythonVersion: 3.11.8
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: MusicPlayer.settings
-      - key: PYTHON_VERSION
-        value: 3.11
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
