@@ -24,10 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2c^))zw2e6x1@3*r#k$bgo4y8b8$_&vr7t(ayaa+qriyq0zask'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['gospelvibes.onrender.com']
-
+ALLOWED_HOSTS = ['gospelvibes.onrender.com', '127.0.0.1', 'localhost']
 
 # Application definition
 
