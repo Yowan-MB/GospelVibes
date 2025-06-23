@@ -28,6 +28,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['gospelvibes-opa8.onrender.com', '.onrender.com', '127.0.0.1', 'localhost']
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'home', 'static')]
+
 # Application definition
 
 INSTALLED_APPS = [
