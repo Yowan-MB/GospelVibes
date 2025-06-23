@@ -1,28 +1,32 @@
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# ⚠️ En production, place ce secret dans une variable d'environnement !
 SECRET_KEY = 'django-insecure-2c^))zw2e6x1@3*r#k$bgo4y8b8$_&vr7t(ayaa+qriyq0zask'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['gospelvibes-opa8.onrender.com', '.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    'gospelvibes-opa8.onrender.com',
+    '.onrender.com',
+    '127.0.0.1',
+    'localhost',
+]
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JS, etc.)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'home', 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files
+# Media files (audio, images liés aux chansons)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'home', 'static', 'media')  # stockés dans static/media
 
-# Application definition
+# Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,9 +37,10 @@ INSTALLED_APPS = [
     'home',
 ]
 
+# Middleware stack
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # 👈 ajouté ici pour servir les fichiers
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,7 +54,7 @@ ROOT_URLCONF = 'MusicPlayer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [],  # Ajoute ici ton dossier templates custom si besoin
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,7 +69,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MusicPlayer.wsgi.application'
 
-# Database
+# SQLite database (Render-ready)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -80,12 +85,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalization
+# Localization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
-# Default primary key field type
+# Auto field config
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
